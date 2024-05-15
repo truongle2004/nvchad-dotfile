@@ -4,9 +4,8 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
+map("i", "jj", "<ESC>")
 map("n", "<leader>m", ":NvimTreeToggle<CR>")
-
 
 
 -- resize windows
@@ -14,11 +13,12 @@ map("n", "<M-right>", ":vertical resize +1<CR>")
 map("n", "<M-left>", ":vertical resize -1<CR>")
 map("n", "<M-Down>", ":resize +1<CR>")
 map("n", "<M-Up>", ":resize -1<CR>")
+
+-- end of line
+map("n", "ee", "$")
+
 -- select all
 map("n", "<C-a>", "ggVG")
-
-
-
 
 -- scroll up faster
 map('n', '<C-k>', '<C-u>')
@@ -29,15 +29,16 @@ map('v', '<C-j>', '<C-d>')
 
 -- move next buffer
 map('n', '<A-,>', ':bNext<CR>')
-map('n', '<A-.>', ':bprevious<CR>')
+map('n', '<A-.>', ':bnext<CR>')
 
 -- code action
 map('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
+
 -- format
 map('n', 'ff', ':lua vim.lsp.buf.format()<CR>')
 
--- go compile
-map('n', '<F5>', ':GoRun<CR>')
+-- ts add missing import
+map('n', '<leader>a', '<cmd> TSToolsAddMissingImports<CR>')
 
 
 -- trouble lsp
@@ -67,15 +68,16 @@ map('n', '<leader><leader>w', ':HopAnywhere<CR>')
 -- surround keymap
 --     Old text                    Command         New text
 -- --------------------------------------------------------------------------------
---     surr*ound_words             ysiw)           (surround_words)
+--     surr*ound_words             ysi")           (surround_"ords)
 --     *make strings               ys$"            "make strings"
 --     [delete ar*ound me!]        ds]             delete around me!
 --     remove <b>HTML t*ags</b>    dst             remove HTML tags
 --     'change quot*es'            cs'"            "change quotes"
 --     <b>or tag* types</b>        csth1<CR>       <h1>or tag types</h1>
 --     delete(functi*on calls)     dsf             function calls
---
 
 
+vim.api.nvim_set_keymap('n', '<F9>', ':w <bar> !g++ -std=c++14 % -o %:r -Wl,--stack,268435456<CR>', { noremap = true })
 
+vim.api.nvim_set_keymap('n', '<F10>', ':!%:r<CR>', { noremap = true })
 
